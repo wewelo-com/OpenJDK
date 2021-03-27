@@ -1,6 +1,16 @@
 #!/bin/bash
 
 mkdir build
-wget -O build/OpenJDK11U-jdk_x64_linux_hotspot_11.0.10_9.tar.gz https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.10%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.10_9.tar.gz
-tar -xf build/OpenJDK11U-jdk_x64_linux_hotspot_11.0.10_9.tar.gz -C build/
-rm build/OpenJDK11U-jdk_x64_linux_hotspot_11.0.10_9.tar.gz
+
+FILENAME=build/OpenJDK11U-jdk_x64_linux_hotspot_11.0.10_9.tar.gz
+DOWNLOAD_LINK=https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.10%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.10_9.tar.gz
+
+echo "Downloading OpenJDK from $DOWNLOAD_LINK"
+wget --quiet -O "$FILENAME" "$DOWNLOAD_LINK"
+FILESIZE=$(stat -c%s "$FILENAME")
+echo "Download complete saved as $FILENAME, the file size is $FILESIZE bytes"
+echo "Starting unzip of $FILENAME"
+tar -xf "$FILENAME" -C build/
+echo "Unzip of $FILENAME completed"
+rm "$FILENAME"
+echo "Archive file $FILENAME has been removed"
